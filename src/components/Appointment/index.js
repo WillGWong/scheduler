@@ -16,8 +16,6 @@ export default function Appointment (props) {
     props.interviewers ? SHOW : EMPTY
   );
 
-  console.log(props, mode)
-
 
   return (<article className="appointment">
 
