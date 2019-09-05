@@ -30,7 +30,7 @@ export default function Appointment (props) {
       />
     )}
     {mode === CREATE && <Form
-      interviewer={[]}
+      interviewer={props.interviewerList}
     />}
 
     </article>
