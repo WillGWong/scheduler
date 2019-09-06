@@ -30,14 +30,17 @@ export default function Appointment (props) {
     transition(SAVE)
     props.bookInterview(props.id, interview)
     .then(() => transition(SHOW))
-    .catch(error => transition(ERROR_SAVE))
+    .catch(error => transition(ERROR_SAVE, true))
   }
 
   function cancel(id){
-    transition(DELETE)
+    transition(DELETE, true)
     props.cancelInterview((id))
-    .then(() => transition(SHOW))
-    .catch(error => transition(ERROR_DELETE))
+    .then(() => transition(EMPTY))
+    .catch(error => {
+      console.log('error encountered, transitioning to error_delete');
+      transition(ERROR_DELETE, true)}
+    )
   }
 
   useEffect(() => {
@@ -47,6 +50,7 @@ export default function Appointment (props) {
       transition(EMPTY)
     }
   }, [props.interviewers])
+  console.log(mode)
 
   return (<article className="appointment">
 
@@ -67,15 +71,14 @@ export default function Appointment (props) {
       id={props.id}
       interviewers={props.interviewerList}
       onSave={save}
-      onCancel={transition}
-      mode="EMPTY"
+      onCancel={back}
     />}
     {mode === SAVE && <Status message="SAVING"/>}
     {mode === DELETE && <Status message="DELETING"/>}
     {mode === CONFIRM && <Confirm 
       id={props.id}
       message="Are you sure you would like to delete?"
-      onCancel={transition}
+      onCancel={back}
       onConfirm={cancel}
       />}
     {mode === EDIT && <Form 
@@ -85,18 +88,15 @@ export default function Appointment (props) {
       name={props.interview.student}
       message="DELETING"
       onSave={save}
-      onCancel={transition}
-      mode="SHOW"
+      onCancel={back}
       />}
       {mode === ERROR_DELETE && <Error 
         message="Could not delete"
-        onClose={transition}
-        mode="SHOW"
+        onClose={back}
         />}
       {mode === ERROR_SAVE && <Error 
         message="Could not save"
-        onClose={transition}
-        mode="CREATE"
+        onClose={back}
         />}
 
     </article>
