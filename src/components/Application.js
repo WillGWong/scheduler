@@ -32,6 +32,19 @@ export default function Application(props) {
     interview = getInterview(state, appointment.interview);
   });
   
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    }
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    return axios.put(`/api/appointments/${id}`, {...appointment})
+    .then((res) => {setState({...state, appointments})
+    })
+  }
 
   return (
     <main className="layout">
@@ -56,12 +69,16 @@ export default function Application(props) {
 />
       </section>
       <section className="schedule">
+        {console.log(state, appointments)}
         {appointments.map(appointment => 
-        <Appointment
-          {...appointment}
-          interviewers={interview}
-          interviewerList={interviewers}
-        />
+
+          <Appointment
+            {...appointment}
+            key={appointment.id}
+            interviewers={getInterview(state, appointment.interview)}
+            interviewerList={interviewers}
+            bookInterview={bookInterview}
+          />
         )}
         <Appointment id="last" time="5pm" />
       </section>
