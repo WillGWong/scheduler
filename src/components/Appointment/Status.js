@@ -1,8 +1,7 @@
 import React from "react";
 import "components/Appointment/styles.scss";
 
-
-export default function Status (props) {
+export default function Status(props) {
   return (
     <main className="appointment__card appointment__card--status">
       <img
@@ -10,7 +9,9 @@ export default function Status (props) {
         src="images/status.png"
         alt="Loading"
       />
-      <h1 className="text--semi-bold">{props.message}</h1>
+      <h1 className="text--semi-bold" data-testid="stausmessage">
+        {props.message}
+      </h1>
     </main>
   );
 }
