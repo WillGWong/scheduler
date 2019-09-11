@@ -1,5 +1,7 @@
 # Interview Scheduler
 
+A React application that allows users to book and cancel interviews
+
 !["Appointment submission form"](https://github.com/WillGWong/scheduler/blob/master/docs/Create.png?raw=true)
 
 !["Appointment submission error"](https://github.com/WillGWong/scheduler/blob/master/docs/CREATE_ERROR.png?raw=true)
